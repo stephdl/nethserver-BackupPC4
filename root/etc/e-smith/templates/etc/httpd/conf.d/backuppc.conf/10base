@@ -1,0 +1,17 @@
+{
+    $OUT = '';
+    $OUT .= "    ProxyPass /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
+    $OUT .= "    ProxyPassReverse /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
+
+    $OUT .=<<"HERE";
+
+    <Location /BackupPC>
+        SSLRequireSSL on
+        order deny,allow
+        deny from all
+        allow from $localAccess
+        require admin
+    </Location>
+
+HERE
+}

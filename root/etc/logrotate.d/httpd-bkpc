@@ -1,0 +1,8 @@
+/var/log/httpd-bkpc.log {
+missingok
+copytruncate
+rotate 12
+compress
+weekly
+create 0660 backuppc backuppc
+}

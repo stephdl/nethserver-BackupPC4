@@ -1,0 +1,11 @@
+#
+#60BackupPC
+#
+{
+if ( $Port == 80 || ! defined $SslMode )
+{
+$OUT .= " RewriteEngine On\n";
+$OUT .= " RewriteRule ^/backuppc(/.*|\$)    https://%{HTTP_HOST}/BackupPC\$1 [L,R]\n";
+$OUT .= " RewriteRule ^/BackupPC(/.*|\$)    https://%{HTTP_HOST}/BackupPC\$1 [L,R]\n";
+}
+}

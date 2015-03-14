@@ -1,7 +1,3 @@
-# $Id: smeserver-BackupPC.spec,v 1.3 2013/11/12 18:29:18 vip-ire Exp $
-# Authority: vip-ire
-# Name: Daniel Berteaud
-
 Name: nethserver-BackupPC
 Version: 1.0.0
 Release: 1%{?dist}
@@ -34,7 +30,53 @@ and easy to install and maintain.
 This package contains specific configuration for Nethserver
 
 
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+perl createlinks
+
+%install
+
+(cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
+/bin/rm -f %{name}-%{version}-filelist
+/sbin/e-smith/genfilelist $RPM_BUILD_ROOT \
+> %{name}-%{version}-filelist
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}-%{version}-filelist
+%defattr(-,root,root)
+
+%pre
+#%{_sbindir}/useradd -c "BackupPC User" -m -d /home/e-smith/files/users/backuppc -r -s /sbin/nologin backuppc >& /dev/null || :
+%{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
+
+%preun
+if [ "$1" = 0 ]; then
+# stop httpd-bkpc silently, but only if it's running
+/sbin/service httpd-bkpc stop &>/dev/null
+/sbin/chkconfig --del httpd-bkpc
+fi
+exit 0
+
+
+%post
+/sbin/chkconfig --add httpd-bkpc
+
+%postun
+if [ "$1" != 0 ]; then
+/sbin/service httpd-bkpc restart 2>&1 > /dev/null
+fi
+exit 0
+
 %changelog
+* Sat Mar 14 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns6
+- First release to Nethserver
+- Thanks to Daniel berteaud the first author.
+
 * Tue Nov 12 2013 Daniel B. <daniel@firewall-services.com> 0.2-1.sme
 - Rebuild for SME9
 
@@ -108,70 +150,4 @@ This package contains specific configuration for Nethserver
 - [3.0-0]
 - rpm package
 - script BackupPC_SME_remoteBackup to remotly backup the pool (to another UNIX host)
-
-
-
-%prep
-%setup -q -n %{name}-%{version}
-
-%build
-perl createlinks
-
-%install
-
-%{__mkdir} -p $RPM_BUILD_ROOT/var/service/httpd-bkpc/supervise
-%{__mkdir} -p $RPM_BUILD_ROOT/var/service/httpd-bkpc/log/supervise
-%{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
-
-
-(cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
-/bin/rm -f %{name}-%{version}-filelist
-/sbin/e-smith/genfilelist $RPM_BUILD_ROOT \
-	--file /usr/share/BackupPC/bin/BackupPC_SME_pre-backup 'attr(0755,root,root) %config(noreplace)' \
-	--file /usr/share/BackupPC/bin/BackupPC_SME_usbArchive 'attr(0755,root,root)' \
-        --file /usr/share/BackupPC/bin/BackupPC_SME_usbCopyPool 'attr(0755,root,root)' \
-        --file /usr/share/BackupPC/bin/BackupPC_SME_localArchive 'attr(0755,root,root)' \
-        --file /usr/share/BackupPC/bin/BackupPC_SME_localCopyPool 'attr(0755,root,root)' \
-        --file /usr/share/BackupPC/bin/BackupPC_SME_remoteArchive 'attr(0755,root,root)' \
-	--file /usr/share/BackupPC/bin/BackupPC_SME_remoteCopyPool 'attr(0755,root,root)' \
-	--file /etc/BackupPC/pc/localserver-template.pl 'attr(640,backuppc,backuppc) %config(noreplace)' \
-	--file /etc/BackupPC/pc/smeserver-template.pl 'attr(640,backuppc,backuppc) %config(noreplace)' \
-	--file /etc/BackupPC/pc/windows-template.pl 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/usbArchive.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/usbCopyPool.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/localArchive.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/localCopyPool.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/remoteArchive.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --file /etc/BackupPC/remoteCopyPool.conf 'attr(640,backuppc,backuppc) %config(noreplace)' \
-        --dir /etc/BackupPC/pc 'attr(750,backuppc,backuppc)' \
-	--dir /var/service/httpd-bkpc 'attr(01755,root,root)' \
-	--file /var/service/httpd-bkpc/run 'attr(0700,root,root)' \
-        --dir /var/service/httpd-bkpc/supervise 'attr(0700,root,root)' \
-        --dir /var/service/httpd-bkpc/log 'attr(0755,root,root)' \
-        --file /var/service/httpd-bkpc/log/run 'attr(0755,root,root)' \
-        --dir /var/service/httpd-bkpc/log/supervise 'attr(0700,root,root)' \
-        --dir /var/log/httpd-bkpc 'attr(0750,smelog,smelog)' \
-	> %{name}-%{version}-filelist
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%files -f %{name}-%{version}-filelist
-%defattr(-,root,root)
-
-%pre
-#%{_sbindir}/useradd -c "BackupPC User" -m -d /home/e-smith/files/users/backuppc -r -s /sbin/nologin backuppc >& /dev/null || :
-%{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
-
-%preun
-
-# Disable services, and stop them
-if [ $1 = 0 ]; then # Uninstall only, not upgrade
-	db configuration setprop backuppc status disabled >& /dev/null || :
-        db configuration setprop httpd-bkpc status disabled >& /dev/null || :
-        service backuppc stop >& /dev/null || :
-fi
-
-true
 

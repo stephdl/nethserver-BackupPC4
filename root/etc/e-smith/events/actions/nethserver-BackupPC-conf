@@ -1,0 +1,4 @@
+#!/usr/bin/perl -w
+
+system ('/sbin/e-smith/signal-event firewall-adjust');
+

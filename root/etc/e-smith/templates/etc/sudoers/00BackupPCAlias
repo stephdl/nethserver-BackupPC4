@@ -1,5 +1,5 @@
 {
-$OUT .= "Cmnd_Alias      BACKUPPC_CMD = /usr/share/BackupPC/bin/BackupPC_SME_pre-backup, /etc/rc.d/init.d/backuppc *";
+$OUT .= "Cmnd_Alias      BACKUPPC_CMD = /etc/rc.d/init.d/backuppc *";
 foreach( split( /[;,]/,( $backuppc{'sudo'} || '' ) ) ){
     $OUT .= ", $_";
 }
