@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# We may need to update some configuration if we have upgraded from smeserver-backuppc.fws
+if [ -e /etc/BackupPC/config.pl ]; then
+
+	# The new URL for backuppc images is /BackupPC/images
+	sed -i 's|^\$Conf{CgiImageDirURL} .*|$Conf{CgiImageDirURL}     = "/BackupPC/images";|' /etc/BackupPC/config.pl
+
+
+	# Update the admin user and the user whi receives the alerts
+	sed -i "s|$Conf{CgiAdminUsers}     = '';|$Conf{CgiAdminUsers}     = 'admin';|" /etc/BackupPC/config.pl
+	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'admin';|" /etc/BackupPC/config.pl
+
+	# Update the CgiURL
+	SystemName=$(/sbin/e-smith/db configuration get SystemName)
+	DomainName=$(/sbin/e-smith/db configuration get DomainName)
+	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
+	
+	#Update sendmail
+        sed -i "s|$Conf{SendmailPath} = undef;|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
+        sed -i "s|$Conf{SendmailPath} = '';|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
+
+    #Update domain detstination
+    sed -i "s|$Conf{EMailUserDestDomain} = '';|$Conf{EMailUserDestDomain}     = '$DomainName';|" /etc/BackupPC/config.pl
+
+	# If par2 is not present, then put /bin/true in the config file to prevent an error
+	if [ ! -x /usr/local/bin/par2 ]; then
+		sed -i 's|^$Conf{ParPath} .*|$Conf{ParPath}     = "/bin/true";|' /etc/BackupPC/config.pl
+	fi
+fi
+
+
+# Ensure permissions are ok
+chown -R backuppc:backuppc /etc/BackupPC/
+chown -R backuppc:backuppc /var/log/BackupPC/
+find /etc/BackupPC/ -type f -exec chmod 640 {} \;
+

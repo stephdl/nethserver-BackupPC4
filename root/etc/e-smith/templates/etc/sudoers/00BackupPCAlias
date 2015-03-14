@@ -1,0 +1,7 @@
+{
+$OUT .= "Cmnd_Alias      BACKUPPC_CMD = /etc/rc.d/init.d/backuppc *";
+foreach( split( /[;,]/,( $backuppc{'sudo'} || '' ) ) ){
+    $OUT .= ", $_";
+}
+}
+

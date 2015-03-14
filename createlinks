@@ -1,0 +1,24 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks  qw(:all);
+
+
+# Event symlinks
+
+my $event = 'nethserver-BackupPC-update';
+templates2events("/etc/BackupPC/httpd.conf", $event);
+templates2events("/etc/httpd/conf/httpd.conf", $event);
+templates2events("/etc/sudoers", $event);
+templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
+
+event_actions($event,
+'initialize-default-databases' => '00',
+'nethserver-BackupPC-conf' => '10',
+'nethserver-BackupPC-service-conf' => '20',
+'backuppc-upgrade-config_pl' => '40');
+
+event_services($event,
+'httpd' => 'reload',
+'backuppc'=>'restart',
+'httpd-bkpc'=>'restart');
+
