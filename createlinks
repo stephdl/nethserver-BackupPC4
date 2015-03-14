@@ -1,0 +1,48 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks  qw(:all);
+
+# Start and stop links
+
+service_link_enhanced("backuppc", "S98", "7");
+service_link_enhanced("backuppc", "K10", "6");
+service_link_enhanced("backuppc", "K10", "0");
+service_link_enhanced("backuppc", "K10", "1");
+
+service_link_enhanced("httpd-bkpc", "S86", "7");
+service_link_enhanced("httpd-bkpc", "K15", "6");
+service_link_enhanced("httpd-bkpc", "K15", "0");
+service_link_enhanced("httpd-bkpc", "K15", "1");
+
+safe_symlink("../daemontools" , 'root/etc/rc.d/init.d/supervise/httpd-bkpc');
+safe_symlink("/var/service/httpd-bkpc" , 'root/service/httpd-bkpc');
+
+# Panel links
+
+panel_link("backuppc", 'manager');
+
+# Various symlinks
+
+
+# Event symlinks
+
+my $event = 'backuppc-update';
+templates2events("/etc/httpd/conf/httpd.conf", $event);
+templates2events("/etc/sudoers", $event);
+templates2events("/etc/httpd/bkpc-conf/httpd.conf", qw(backuppc-update bootstrap-console-save));
+
+event_link("backuppc-checkupgrade", $event, "20");
+event_link("backuppc-genkey", $event, "10");
+event_link("backuppc-checkupgrade", "post-upgrade", "91");
+event_link("backuppc-genkey", "post-upgrade", "90");
+
+safe_symlink("restart", "root/etc/e-smith/events/$event/services2adjust/backuppc");
+safe_symlink("sigusr1", "root/etc/e-smith/events/$event/services2adjust/httpd-e-smith");
+safe_symlink("sigusr1", "root/etc/e-smith/events/$event/services2adjust/httpd-bkpc");
+safe_symlink("sigusr1", "root/etc/e-smith/events/logrotate/services2adjust/httpd-bkpc");
+
+# Create needed empty files
+safe_touch("root/etc/e-smith/events/logrotate/logfiles2timestamp/var/log/httpd/bkpc_access_log");
+safe_touch("root/etc/e-smith/events/logrotate/logfiles2timestamp/var/log/httpd/bkpc_error_log");
+safe_touch("root/var/service/httpd-bkpc/down");
+

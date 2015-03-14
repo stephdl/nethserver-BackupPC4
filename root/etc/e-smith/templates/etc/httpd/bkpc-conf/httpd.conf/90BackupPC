@@ -1,0 +1,27 @@
+
+Alias           /BackupPC/images        /usr/share/BackupPC/html/
+ScriptAlias     /BackupPC               /usr/share/BackupPC/sbin/BackupPC_Admin
+
+<Directory /usr/share/BackupPC/html/>
+    Options None
+    AllowOverride None
+    order deny,allow
+    deny from all
+    allow from 127.0.0.1
+</Directory>
+
+<Directory /usr/share/BackupPC/sbin/>
+        Options ExecCGI
+        AllowOverride None
+        order deny,allow
+        deny from all
+        allow from 127.0.0.1
+        AuthName "BackupPC"
+		AuthType Basic
+        TKTAuthLoginURL /server-common/cgi-bin/login
+        require valid-user
+        SetEnv IMGHDR_SRC "/server-common/server-manager.jpg"
+        Satisfy all
+</Directory>
+
+

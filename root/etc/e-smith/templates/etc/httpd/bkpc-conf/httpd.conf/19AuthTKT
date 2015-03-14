@@ -1,0 +1,7 @@
+{
+    $OUT .= "LoadModule auth_tkt_module modules/mod_auth_tkt.so\n";
+
+    my $secret = ${'httpd-admin'}{TKTAuthSecret} || "34322500-7330-4400-423A-3A00434F5245";
+    $OUT .= "TKTAuthSecret \"$secret\"\n";
+}
+

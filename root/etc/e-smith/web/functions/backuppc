@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+#----------------------------------------------------------------------
+# heading     : Administration
+# description : BackupPC
+# navigation  : 4000 4200
+#----------------------------------------------------------------------
+
+use strict;
+use CGI':all';
+use CGI::Carp qw(fatalsToBrowser);
+
+
+BEGIN
+{
+    $ENV {'PATH'} = '/bin:/usr/bin:/sbin';
+    $ENV {'SHELL'} = '/bin/bash';
+    delete $ENV {'ENV'};
+}
+
+
+my $q = new CGI;
+my $content="0; url=https://".$ENV {'HTTP_X_FORWARDED_HOST'}."/BackupPC";
+$q->default_dtd('-//W3C//DTD XHTML 1.0 Transitional//EN');
+
+print $q->header ('text/html');
+print $q->start_html (-head=>meta({-http_equiv=>'refresh', -content=>$content}));
+
+
+
+print $q->end_html;
+
+

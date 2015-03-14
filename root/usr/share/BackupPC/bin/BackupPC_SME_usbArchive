@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+
+# 	Author: Daniel Berteaud (daniel@firewall-services.com)
+
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+use lib "/usr/share/BackupPC/lib";
+use BackupPC::SMEarchive;
+#use Getopt::Std;
+use strict;
+
+
+my $logFile = '/tmp/'.genRandName ();
+
+
+# Sortie erreur standard=fichier de log
+open (STDERR, ">$logFile");
+
+my $today = `$path{date} +%F-%kh%M`;
+my $check = 1;
+# on inscrit la date en haut du fichier log
+print STDERR "Starting archive: ".`$path{date}`."\n";
+
+my %opts=();
+
+my %params=(
+		'split'=>"0",
+		'compress'=>"/bin/gzip",
+		'cipher'=>'off',
+		'key'=>'/etc/BackupPC/archive.key',
+		'backupNum'=>"-1",
+		'share'=>"*",
+		'hosts'=>'localhost',
+		'sendMailTo'=>'admin',
+		'device'=>'/dev/sdc1',
+		'configFile'=>'/etc/BackupPC/usbArchive.conf');
+
+# On définit un nom aléatoire pour le point de montage
+$params{destination} = '/var/lib/BackupPC/'.genRandName();
+# On lance la récupération des paramètre qui retourne le fichier de config à utiliser
+$params{configFile} = init($params{configFile});
+
+%params = readConf(\%params);
+
+print STDERR "\nYou have requested to archive these hosts: $params{hosts} to this destination: $params{destination}\n\n";
+
+$check = mountUsb($params{destination},$params{device});
+
+if ($check eq 1){
+	localArchive($params{hosts},$params{backupNum},$params{share},$params{compress},$params{split},$params{cipher},$params{key},$params{destination});
+}
+else{
+	print STDERR "\n\nAborting, an error occured while mounting the removable device $params{device} on $params{destination}\n\n";
+}
+
+$check = umountUsb($params{destination},$params{device});
+
+if ($check = 1){
+	print STDERR "\numounting $params{device}: [ OK ]\n";
+}
+else{
+	print STDERR "\nan error occured while unmounting the device $params{device} from $params{destination}\n";
+}
+
+print STDERR "\n\nArchive finished: ".`$path{date}`."\n";
+
+my $log = `$path{cat} $logFile`;
+sendMail($params{sendMailTo},'usbArchive',$log);
+mvLog('usbArchive',$logFile,$today);
+
+exit(0);
+
