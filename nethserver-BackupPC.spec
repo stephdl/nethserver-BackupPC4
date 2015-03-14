@@ -13,9 +13,7 @@ BuildArch: noarch
 
 BuildRequires: nethserver-devtools
 BuildRequires: perl
-Requires: mod_auth_tkt
 Requires: BackupPC >= 3.1.0
-#Requires: smeserver-remoteuseraccess
 Requires: openssl
 Requires: mod_authnz_external
 Requires: pwauth
