@@ -35,10 +35,12 @@ This package contains specific configuration for Nethserver
 perl createlinks
 
 %install
+%{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
 /sbin/e-smith/genfilelist $RPM_BUILD_ROOT \
+        --dir /var/log/httpd-bkpc 'attr(0750,backuppc,backuppc)' \
 > %{name}-%{version}-filelist
 
 
