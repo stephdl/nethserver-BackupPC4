@@ -8,7 +8,7 @@
  # Description: httpd-bkpc is a script to manage the httpd-bkpc software
  ### END INIT INFO
 
-CONFIG=/etc/httpd/BkPCconf/httpd.conf
+CONFIG=/etc/BackupPC/httpd.conf
 
 SCRIPT="/usr/sbin/httpd -f $CONFIG -D FOREGROUND"
 RUNAS='backuppc'

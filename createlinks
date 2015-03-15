@@ -6,7 +6,7 @@ use esmith::Build::CreateLinks  qw(:all);
 # Event symlinks
 
 my $event = 'nethserver-BackupPC-update';
-templates2events("/etc/httpd/BkPCconf/httpd.conf", $event);
+templates2events("/etc/BackupPC/httpd.conf", $event);
 templates2events("/etc/httpd/conf/httpd.conf", $event);
 templates2events("/etc/sudoers", $event);
 
@@ -15,7 +15,8 @@ event_actions($event,
 'initialize-default-databases' => '00',
 'nethserver-BackupPC-conf' => '10',
 'nethserver-BackupPC-service-conf' => '20',
-'backuppc-genkey' => '30');
+'backuppc-genkey' => '30',
+'backuppc-checkupgrade' => '40');
 
 event_services($event,
 'httpd' => 'reload',
