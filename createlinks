@@ -6,9 +6,10 @@ use esmith::Build::CreateLinks  qw(:all);
 # Event symlinks
 
 my $event = 'nethserver-BackupPC-update';
+templates2events("/etc/httpd/BkPCconf/httpd.conf", $event);
 templates2events("/etc/httpd/conf/httpd.conf", $event);
 templates2events("/etc/sudoers", $event);
-templates2events("/etc/httpd/BkPCconf/httpd.conf", $event);
+
 
 event_actions($event,
 'initialize-default-databases' => '00',
