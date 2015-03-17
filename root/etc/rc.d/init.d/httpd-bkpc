@@ -11,11 +11,11 @@
 CONFIG=/etc/BackupPC/httpd.conf
 
 SCRIPT="/usr/sbin/httpd -f $CONFIG -D FOREGROUND"
-RUNAS='backuppc'
+RUNAS='root'
 NAME='httpd-bkpc'
  
  PIDFILE=/var/run/$NAME.pid
- LOGFILE=/var/log/httpd-bkpc/$NAME.log
+ LOGFILE=/var/log/httpd-bkpc/$NAME-service_log
  
  start() {
   if [ -f $PIDFILE ] && kill -0 $(cat $PIDFILE); then

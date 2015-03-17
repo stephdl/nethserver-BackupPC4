@@ -15,6 +15,9 @@ if [ -e /etc/BackupPC/config.pl ]; then
 	SystemName=$(/sbin/e-smith/db configuration get SystemName)
 	DomainName=$(/sbin/e-smith/db configuration get DomainName)
 	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
+	
+	#Update sendmail
+	sed -i "s|$Conf{SendmailPath}     = '';|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
 
 	# If par2 is not present, then put /bin/true in the config file to prevent an error
 	if [ ! -x /usr/local/bin/par2 ]; then

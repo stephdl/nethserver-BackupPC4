@@ -52,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 #%{_sbindir}/useradd -c "BackupPC User" -m -d /home/e-smith/files/users/backuppc -r -s /sbin/nologin backuppc >& /dev/null || :
-%{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
+%{_sbindir}/usermod -a -G apache -m -d /var/lib/BackupPC backuppc >& /dev/null || :
 
 %preun
 if [ "$1" = 0 ]; then

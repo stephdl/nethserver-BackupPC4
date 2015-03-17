@@ -8,12 +8,10 @@
     <Location /BackupPC>
         AuthName "BackupPC"
         AuthType Basic
-        AuthExternal pwauth
         SSLRequireSSL on
         order deny,allow
         deny from all
         allow from $localAccess
-        require user admin
         Satisfy all
     </Location>
 
