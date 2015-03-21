@@ -1,0 +1,34 @@
+{
+$OUT .=<< 'HERE';
+$Conf{BackupsDisable} = 1;
+$Conf{RsyncShareName} = [
+  '/etc',
+  '/home'
+];
+$Conf{XferMethod} = 'rsync';
+$Conf{BackupFilesExclude} = {
+  '*' => [
+    '/lost+found',
+    '/.local/share/Trash',
+    '/.cache',
+    '/.gvfs',
+    '/.thumbnails',
+    '/.local/share/gvfs-metadata',
+    '/var/lib/BackupPC',
+    '/proc',
+    '/tmp',
+    '/sys',
+    '/dev',
+    '/boot',
+    '/mnt',
+    '/media',
+    '/initrd',
+    '/var/tmp',
+    '/usr/tmp',
+    '/var/lib/mysql',
+    '/run'
+  ]
+};
+$Conf{ClientCharset} = 'UTF-8';
+HERE
+}

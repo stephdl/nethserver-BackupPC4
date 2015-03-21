@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.0
-Release: 3%{?dist}
+Release: 6%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -33,6 +33,7 @@ perl createlinks
 
 %install
 %{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
+%{__mkdir} -p $RPM_BUILD_ROOT/etc/BackupPC/pc
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
@@ -61,7 +62,10 @@ exit 0
 
 %post
 /sbin/chkconfig --add httpd-bkpc
-
+# rsa key created
+if [[ ! -e /var/lib/BackupPC/.ssh/id_rsa ]]; then
+/bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -C "RSA key for BackupPC automatic login" -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
+fi
 %postun
 if [ "$1" != 0 ]; then
 /sbin/service httpd-bkpc restart 2>&1 > /dev/null
@@ -69,6 +73,13 @@ fi
 exit 0
 
 %changelog
+* Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-6.ns6
+- Added template and cygwin settings
+- Added binary of rsync-cygwin
+- Automatic 4096 rsa key creation in /var/lib/BackupPC
+- Added a linux template
+- corrected backuppc url error
+
 * Sat Mar 14 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns6
 - First release to Nethserver
 - Thanks to Daniel berteaud the first author.

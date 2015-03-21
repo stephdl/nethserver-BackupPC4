@@ -7,6 +7,9 @@ $OUT .=<<"HERE";
 Alias           /BackupPC/images        /usr/share/BackupPC/html/
 ScriptAlias     /BackupPC               /usr/share/BackupPC/sbin/BackupPC_Admin
 
+Alias           /backuppc/images        /usr/share/BackupPC/html/
+ScriptAlias     /backuppc               /usr/share/BackupPC/sbin/BackupPC_Admin
+
 <Directory /usr/share/BackupPC/html/>
     Options None
     AllowOverride None

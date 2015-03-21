@@ -1,0 +1,52 @@
+{
+use strict;
+use esmith::NetworksDB;
+my $ndb = esmith::NetworksDB->open_ro() || return;
+my $LocalIP = $ndb->green()->prop('ipaddr') || '192.168.xxx.xxx';
+
+
+$OUT .=<< "HERE";
+use chroot = false
+max connections = 1
+pid file = c:/rsyncd/rsyncd.pid
+lock file = c:/rsyncd/rsyncd.lock
+
+## For personal needs you can create your own modules
+## You can use this example, of course uncomment it
+#[c_wholedrive]
+# path = /cygdrive/c
+# comment = Entire C: Drive
+# auth users = backuppc
+# secrets file = c:/rsyncd/rsyncd.secrets
+# hosts allow = $LocalIP
+# strict modes = false
+# read only = true
+# list = false
+
+
+[c_drive]
+##For XP Client Uncomment if needed and adjust to your correct user
+ #path = /cygdrive/c/Documents and Settings/your_user
+
+##For W7/W8 Client Uncomment if needed and adjust to your correct user
+ #path = /cygdrive/c/Users/your_user
+
+ comment = Backup User Document
+ auth users = backuppc
+ secrets file = c:/rsyncd/rsyncd.secrets
+ hosts allow = $LocalIP
+ strict modes = false
+ read only = true
+ list = false
+
+[d_drive]
+ path = /cygdrive/d
+ comment = Entire D: Drive
+ auth users = backuppc
+ secrets file = c:/rsyncd/rsyncd.secrets
+ hosts allow = $LocalIP
+ strict modes = false
+ read only = true
+ list = false
+HERE
+}
