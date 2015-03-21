@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.0
-Release: 3%{?dist}
+Release: 4444%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
