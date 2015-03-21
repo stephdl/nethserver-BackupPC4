@@ -1,0 +1,132 @@
+{
+my $keyfile = '/etc/BackupPC/cygwin_password.key';
+
+open FILE, "$keyfile" or die "Couldn't open file: $!";
+my $secret = join("", <FILE>);
+close FILE;
+
+$OUT .=<< "HERE"
+$Conf{ClientCharset} = 'cp1252';
+$Conf{RsyncShareName} = [
+  'cDrive'
+];
+$Conf{RsyncdPasswd} = '$secret';
+$Conf{RsyncdUserName} = 'backuppc';
+$Conf{XferMethod} = 'rsyncd';
+$Conf{BackupFilesExclude} = {
+ 'c-drive' => [
+ '*.lock',
+ '/$AVG',
+ '/$RECYCLE.BIN',
+ '/$Recycle.Bin',
+ '/BOOTSECT.BAK',
+ '/Boot',
+ '/Documents and Settings',
+ '/Intel',
+ '/MSOCache',
+ '/Program Files',
+ '/ProgramData/Application Data',
+ '/ProgramData/Desktop',
+ '/ProgramData/Documents',
+ '/ProgramData/Favorites',
+ '/ProgramData/Microsoft/Search',
+ '/ProgramData/Microsoft/Windows Defender',
+ '/ProgramData/Start Menu',
+ '/ProgramData/Templates',
+ '/SWSetup',
+ '/System Volume Information',
+ '/System.sav',
+ '/Users/*/AppData/Local/Application Data',
+ '/Users/*/AppData/Local/History',
+ '/Users/*/AppData/Local/Microsoft/Windows Defender/FileTracker',
+ '/Users/*/AppData/Local/Microsoft/Windows/Explorer/thumbcache_*.db',
+ '/Users/*/AppData/Local/Microsoft/Windows/History/History.IE5/MSHist*',
+ '/Users/*/AppData/Local/Microsoft/Windows/Temporary Internet Files',
+ '/Users/*/AppData/Local/Microsoft/Windows/UsrClass.dat*',
+ '/Users/*/AppData/Local/Microsoft/Windows/WER',
+ '/Users/*/AppData/Local/Mozilla/Firefox/Profiles/*/Cache',
+ '/Users/*/AppData/Local/Mozilla/Firefox/Profiles/*/OfflineCache',
+ '/Users/*/AppData/Local/Temp',
+ '/Users/*/AppData/Local/Temporary Internet Files',
+ '/Users/*/AppData/Roaming/Microsoft/Windows/Cookies',
+ '/Users/*/AppData/Roaming/Microsoft/Windows/Recent',
+ '/Users/*/Application Data',
+ '/Users/*/Cookies',
+ '/Users/*/Documents/My Music',
+ '/Users/*/Documents/My Pictures',
+ '/Users/*/Documents/My Videos',
+ '/Users/*/Local Settings',
+ '/Users/*/My Documents',
+ '/Users/*/NTUSER.DAT*',
+ '/Users/*/NetHood',
+ '/Users/*/PrintHood',
+ '/Users/*/Recent',
+ '/Users/*/SendTo',
+ '/Users/*/Start Menu',
+ '/Users/*/Templates',
+ '/Users/*/ntuser.dat*',
+ '/Users/All Users',
+ '/Users/All Users/Documents',
+ '/Users/All Users/Favorites',
+ '/Users/All Users/Start Menu',
+ '/Users/All Users/Templates',
+ '/Users/Users/All Users/Application Data',
+ '/Users/Users/All Users/Desktop',
+ '/Users/Users/Default User',
+ '/Windows',
+ '/autoexec.bat',
+ '/bea',
+ '/bootmgr',
+ '/config.sys',
+ '/eclipse',
+ '/hiberfil.sys',
+ '/pagefile.sys',
+ 'Cache*',
+ 'IconCache.db',
+ 'Thumbs.db',
+ 'cache*'
+ ],
+'d-drive' => [
+ '*.lock',
+ '/$RECYCLE.BIN',
+ '/$Recycle.Bin',
+ '/Documents and Settings',
+ '/Users/*/AppData/Local/Application Data',
+ '/Users/*/AppData/Local/History',
+ '/Users/*/AppData/Local/Microsoft/Windows Defender/FileTracker',
+ '/Users/*/AppData/Local/Microsoft/Windows/Explorer/thumbcache_*.db',
+ '/Users/*/AppData/Local/Microsoft/Windows/History/History.IE5/MSHist*',
+ '/Users/*/AppData/Local/Microsoft/Windows/Temporary Internet Files',
+ '/Users/*/AppData/Local/Microsoft/Windows/UsrClass.dat*',
+ '/Users/*/AppData/Local/Microsoft/Windows/WER',
+ '/Users/*/AppData/Local/Mozilla/Firefox/Profiles/*/Cache',
+ '/Users/*/AppData/Local/Mozilla/Firefox/Profiles/*/OfflineCache',
+ '/Users/*/AppData/Local/Temp',
+ '/Users/*/AppData/Local/Temporary Internet Files',
+ '/Users/*/AppData/Roaming/Microsoft/Windows/Cookies',
+ '/Users/*/AppData/Roaming/Microsoft/Windows/Recent',
+ '/Users/*/Application Data',
+ '/Users/*/Cookies',
+ '/Users/*/Documents/My Music',
+ '/Users/*/Documents/My Pictures',
+ '/Users/*/Documents/My Videos',
+ '/Users/*/Local Settings',
+ '/Users/*/My Documents',
+ '/Users/*/NTUSER.DAT*',
+ '/Users/*/NetHood',
+ '/Users/*/PrintHood',
+ '/Users/*/Recent',
+ '/Users/*/SendTo',
+ '/Users/*/Start Menu',
+ '/Users/*/Templates',
+ '/Users/*/ntuser.dat*',
+ '/pagefile.sys',
+ 'Cache*',
+ 'IconCache.db',
+ 'Thumbs.db',
+ 'cache*'
+ ]
+};
+$Conf{BackupsDisable} = 1;
+HERE
+}

@@ -29,6 +29,16 @@ if [ -e /etc/BackupPC/config.pl ]; then
 	fi
 fi
 
+# Add the example configs
+EX=$(/sbin/e-smith/db configuration getprop backuppc examples)
+if [ $EX == 'enabled' ]; then
+	if [ $(grep -c windows7-template /etc/BackupPC/hosts) -lt 1 ]; then
+		echo "windows7-template 0 admin" >> /etc/BackupPC/hosts
+	fi
+	if [ $(grep -c windowsXP-template /etc/BackupPC/hosts) -lt 1 ]; then
+		echo "windowsXP-template 0 admin" >> /etc/BackupPC/hosts
+	fi
+fi
 
 # Ensure permissions are ok
 chown -R backuppc:backuppc /etc/BackupPC/

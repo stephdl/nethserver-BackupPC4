@@ -1,0 +1,9 @@
+{
+my $keyfile = '/etc/BackupPC/cygwin_password.key';
+
+open FILE, "$keyfile" or die "Couldn't open file: $!";
+my $secret = join("", <FILE>);
+close FILE;
+
+$OUT .="backuppc:$secret";
+}

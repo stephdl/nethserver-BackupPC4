@@ -1,0 +1,47 @@
+{
+my $keyfile = '/etc/BackupPC/cygwin_password.key';
+
+open FILE, "$keyfile" or die "Couldn't open file: $!";
+my $secret = join("", <FILE>);
+close FILE;
+
+$OUT .=<< "HERE"
+$Conf{ClientCharset} = 'cp1252';
+$Conf{RsyncShareName} = [
+  'cDrive'
+];
+$Conf{RsyncdPasswd} = '$secret';
+$Conf{RsyncdUserName} = 'backuppc';
+$Conf{XferMethod} = 'rsyncd';
+$Conf{BackupFilesExclude} = {
+ '*' => [
+ '*.lock',
+ '/AUTOEXEC.BAT',
+ '/BOOTSECT.BAK',
+ '/CONFIG.SYS',
+ '/Documents and Settings/*/Cookies',
+ '/Documents and Settings/*/Local Settings/Application Data/Microsoft/Windows/UsrClass.dat*',
+ '/Documents and Settings/*/Local Settings/Application Data/Mozilla/Firefox/Profiles/*/Cache',
+ '/Documents and Settings/*/Local Settings/Application Data/Mozilla/Firefox/Profiles/*/OfflineCache',
+ '/Documents and Settings/*/Local Settings/Temp',
+ '/Documents and Settings/*/Local Settings/Temporary Internet Files',
+ '/Documents and Settings/*/My Documents/My Dropbox',
+ '/Documents and Settings/*/NTUSER.DAT*',
+ '/Documents and Settings/*/Recent',
+ '/Documents and Settings/*/ntuser.dat*',
+ '/MSOCache',
+ '/Program Files/',
+ '/RECYCLER',
+ '/System Volume Information',
+ '/WINDOWS',
+ '/hiberfil.sys',
+ '/pagefile.sys',
+ 'Cache*',
+ 'IconCache.db',
+ 'Thumbs.db',
+ 'cache*'
+ ]
+};
+$Conf{BackupsDisable} = 1;
+HERE
+}

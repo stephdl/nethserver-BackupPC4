@@ -1,0 +1,38 @@
+{
+use strict;
+use esmith::NetworksDB;
+
+     my $idb = esmith::NetworksDB->open_ro;
+     my @interfaces = $idb->get_by_role('green');
+     my $green = $interfaces[0];
+
+my $IP = $idb->get_prop("$green",'ipaddr') || '192.168.xxx.xxx';
+
+
+$OUT .=<< "HERE"
+use chroot = false
+max connections = 1
+pid file = c:/rsyncd/rsyncd.pid
+lock file = c:/rsyncd/rsyncd.lock
+
+[c_drive]
+ path = c:
+ comment = Entire C: Drive
+ auth users = backuppc
+ secrets file = c:/rsyncd/rsyncd.secrets
+ hosts allow = $IP
+ strict modes = false
+ read only = true
+ list = false
+
+[d_drive]
+ path = d:
+ comment = Entire D: Drive
+ auth users = backuppc
+ secrets file = c:/rsyncd/rsyncd.secrets
+ hosts allow = $IP
+ strict modes = false
+ read only = true
+ list = false
+ HERE
+}

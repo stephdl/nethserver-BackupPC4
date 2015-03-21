@@ -10,11 +10,14 @@ templates2events("/etc/BackupPC/httpd.conf", $event);
 templates2events("/etc/httpd/conf/httpd.conf", $event);
 templates2events("/etc/sudoers", $event);
 templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
+templates2events("/etc/BackupPC/pc/windowsXP-template.pl", $event);
+templates2events("/etc/BackupPC/pc/windows7-template.pl", $event);
 
 event_actions($event,
 'initialize-default-databases' => '00',
 'nethserver-BackupPC-conf' => '10',
 'nethserver-BackupPC-service-conf' => '20',
+'backuppc-genkey' => '30',
 'backuppc-upgrade-config_pl' => '40');
 
 event_services($event,
