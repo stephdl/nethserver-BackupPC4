@@ -2,15 +2,15 @@
 
 use esmith::ConfigDB;
 my $db = esmith::ConfigDB->open_ro;
-my $status = $db->get_prop('tt-rss','status')|| 'disabled';
+my $status = $db->get_prop('httpd-bkpc','status')|| 'disabled';
 
 if ($status eq 'enabled') {
 system ('chkconfig httpd-bkpc on');
-system ('/sbin/service tt-rss restart');
+system ('/sbin/service httpd-bkpc restart');
 }
 
 else {
-system ('/sbin/service tt-rss stop');
+system ('/sbin/service httpd-bkpc stop');
 system ('chkconfig httpd-bkpc off');
 }
 
