@@ -1,4 +1,8 @@
 {
+
+    return '# BackupPC and/or httpd-bkpc are disabled' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
+        (${'httpd-bkpc'}{'status'} || 'disabled') eq 'enabled');
+
     $OUT = '';
     $OUT .= "    ProxyPass /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
     $OUT .= "    ProxyPassReverse /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
@@ -16,5 +20,28 @@
     </Location>
 
 HERE
-}
 
+use NethServer::Password;
+my $pwd = NethServer::Password::store('libuser');
+
+    $OUT .=<<"HERE";
+
+    Alias /cygwin /usr/share/BackupPC/cygwin
+
+    <Directory /usr/share/BackupPC/cygwin>
+        Options -Indexes
+        AllowOverride None
+        Order Deny,Allow
+        Deny from All
+        allow from $localAccess
+        AuthName "cygwin-rsyncd setup"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPBindDN cn=libuser,dc=directory,dc=nh
+        AuthLDAPBindPassword $pwd
+        AuthLDAPURL "ldap://localhost/ou=People,dc=directory,dc=nh?uid?sub?(objectClass=posixAccount)"
+        require user admin
+        Satisfy all
+    </Directory>
+HERE
+}

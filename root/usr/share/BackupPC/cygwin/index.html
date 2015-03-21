@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+</head>
+<style>
+.body {font-family:Verdana,Tahoma,Arial;color:#000000;background-color:#ffffff;}
+.info {font-family:Verdana,Tahoma,Arial;font-size:11px;}
+.info a:link,a:visited {font-family:Verdana,Tahoma,Arial;color:#0000ff;font-size:11px;text-decoration:none;}
+.title {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#ffffff;}
+.title2 {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#ffffff;text-align:left;}
+.title3 {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#ffffff;text-align:right;}
+.header {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#dddddd;text-align:left;border-right:1px solid #666666;border-bottom:1px solid #666666;}
+.header2 {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#dddddd;text-align:right;border-right:1px solid #666666;border-bottom:1px solid #666666;}
+.header3 {font-family:Verdana,Tahoma,Arial;font-size:11px;color:darkblue;background-color:#dddddd;text-align:center;border-right:1px solid #666666;border-bottom:1px solid #666666;}
+.text {font-family:Verdana,Tahoma,Arial;color:#000000;font-size:11px;}
+.data {font-family:Verdana,Tahoma,Arial;color:#000000;font-size:11px;background-color:lavender;text-align:right;border-right:1px solid #6a5acd;border-bottom:1px solid #6a5acd;}
+.data a:link,a:visited {font-family:Verdana,Tahoma,Arial;color:#0000ff;font-size:11px;background-color:lavender;text-align:right;text-decoration:none;}
+.data2 {font-family:Verdana,Tahoma,Arial;color:#000000;font-size:11px;background-color:lavender;border-right:1px solid #6a5acd;border-bottom:1px solid #6a5acd;}
+.data2 a:link,a:visited {font-family:Verdana,Tahoma,Arial;color:#0000ff;font-size:11px;background-color:lavender;text-decoration:none;}
+.data3 {font-family:Verdana,Tahoma,Arial;color:#000000;font-size:11px,text-align:center;background-color:lavender;border-right:1px solid #6a5acd;border-bottom:1px solid #6a5acd;}
+.data3 a:link,a:visited {font-family:Verdana,Tahoma,Arial;color:#0000ff;font-size:11px;text-align:center;background-color:lavender;text-decoration:none;}
+.text {font-family:Verdana,Tahoma,Arial;color:#000000;font-size:11px;text-align:right;}
+.link {font-family:Verdana,Tahoma,Arial;font-size:11px;color:#0000ff;}
+.link a:link,a:visited {font-family:Verdana,Tahoma,Arial;font-size:11px;color:#0000ff;text-decoration:none;}
+</style>
+
+<body lang="fr-FR" dir="ltr">
+<h2 class="western" align="center">This page is here to help the cygwin-rsyncd setup of windows clients.</h2>
+</p>
+<br/>
+<p style="margin-bottom: 0cm; line-height: 100%" align="center">You can <a href="https://sourceforge.net/projects/backuppc/files/cygwin-rsyncd/"><b>Download</b>
+</a> the last version  of cygwin-rsyncd for Windows, or download the 3.0.9.0 version <a href="cygwin-rsyncd-3.0.9.0_installer.exe" target="_blank"><b>Here</b></a> if you don't have an internet access</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">When you download
+and run cygwin-rsyncd, the cygwin and rsync files are installed in
+c:\rsyncd. A new windows service called RsyncServer is created and
+activated (ie: run). The c:\rsyncd directory will have an uninstall
+executable which will remove the service and installation files.</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">You will need to
+edit the c:\rsyncd\rsyncd.conf and c:\rsyncd\rsyncd.secrets files to
+set your client-specific shares, backup user name and password. You
+should restart the Windows RsyncServer service to get the new
+settings.</p>
+
+<p style="margin-bottom: 0cm; line-height: 100%">You can find the  <a href="rsyncd.conf" target="_blank"><b>rsyncd.conf</b></a> and the 
+<a href="rsyncd.secrets" target="_blank"><b>rsyncd.secrets</b></a> files. They can be used as configuration files, but you can also write your own options in rsyncd.conf. 
+The file rsyncd.secrets contains the master password, you can use it or change it to increase the security. Dont let in all hands this secret file.</p>
+
+<p style="margin-bottom: 0cm; line-height: 100%">Once rsyncd.conf and  rsyncd.secrets saved on your windows client and the settings adjusted to the correct values, you need to run a .bat file to adjust the windows firewall (the port 873 need to be opened). Please use the correct version <a href="backuppc-fw-W7.bat" target="_blank"><b>backuppc-fw-W7.bat</b></a> or 
+<a href="backuppc-fw-xp.bat" target="_blank"><b>backuppc-fw-xp.bat</b></a> files. Past the content in a file, name it with a .bat and run it as an Administrator</p>
+</body>
+

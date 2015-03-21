@@ -1,4 +1,6 @@
 #!/bin/bash
+        SystemName=$(/sbin/e-smith/db configuration get SystemName)
+        DomainName=$(/sbin/e-smith/db configuration get DomainName)
 
 # We may need to update some configuration if we have upgraded from smeserver-backuppc.fws
 if [ -e /etc/BackupPC/config.pl ]; then
@@ -9,11 +11,9 @@ if [ -e /etc/BackupPC/config.pl ]; then
 
 	# Update the admin user and the user whi receives the alerts
 	sed -i "s|$Conf{CgiAdminUsers}     = '';|$Conf{CgiAdminUsers}     = 'admin';|" /etc/BackupPC/config.pl
-	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'admin';|" /etc/BackupPC/config.pl
+	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'admin@$DomainName';|" /etc/BackupPC/config.pl
 
 	# Update the CgiURL
-	SystemName=$(/sbin/e-smith/db configuration get SystemName)
-	DomainName=$(/sbin/e-smith/db configuration get DomainName)
 	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
 	
 	#Update sendmail
@@ -29,6 +29,19 @@ if [ -e /etc/BackupPC/config.pl ]; then
 	fi
 fi
 
+# Add the example configs
+EX=$(/sbin/e-smith/db configuration getprop backuppc examples)
+if [ $EX == 'enabled' ]; then
+	if [ $(grep -c windows7-template /etc/BackupPC/hosts) -lt 1 ]; then
+		echo "windows7-template 0 admin" >> /etc/BackupPC/hosts
+	fi
+        if [ $(grep -c windows8-template /etc/BackupPC/hosts) -lt 1 ]; then
+                echo "windows8-template 0 admin" >> /etc/BackupPC/hosts
+        fi
+	if [ $(grep -c windowsxp-template /etc/BackupPC/hosts) -lt 1 ]; then
+		echo "windowsxp-template 0 admin" >> /etc/BackupPC/hosts
+	fi
+fi
 
 # Ensure permissions are ok
 chown -R backuppc:backuppc /etc/BackupPC/

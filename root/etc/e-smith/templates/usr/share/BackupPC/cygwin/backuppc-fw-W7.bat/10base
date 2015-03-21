@@ -1,0 +1,19 @@
+{
+use strict;
+use esmith::NetworksDB;
+my $ndb = esmith::NetworksDB->open_ro() || return;
+my $LocalIP = $ndb->green()->prop('ipaddr') || '192.168.xxx.xxx';
+
+
+$OUT .=<< "HERE";
+rem backuppc-fw-vista.bat - Install firewall rules for rsycnd
+
+set REMOTE=$LocalIP,LocalSubnet
+HERE
+$OUT .=<< 'HERE';
+netsh advfirewall firewall add rule name="RSync Program" dir=in action=allow program="C:\rsyncd\rsync.exe" enable=yes remoteip=%REMOTE% profile=domain
+netsh advfirewall firewall add rule name="RSync Related Port" dir=in action=allow protocol=TCP localport=873
+netsh advfirewall firewall add rule name="ICMP Allow incoming V4 echo request" protocol=icmpv4:8,any dir=in action=allow
+pause
+HERE
+}

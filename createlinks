@@ -2,20 +2,24 @@
 
 use esmith::Build::CreateLinks  qw(:all);
 
-
-# Event symlinks
-
 my $event = 'nethserver-BackupPC-update';
 templates2events("/etc/BackupPC/httpd.conf", $event);
 templates2events("/etc/httpd/conf/httpd.conf", $event);
 templates2events("/etc/sudoers", $event);
 templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
+templates2events("/etc/BackupPC/pc/windowsxp-template.pl", $event);
+templates2events("/etc/BackupPC/pc/windows7-template.pl", $event);
+templates2events("/etc/BackupPC/pc/windows8-template.pl", $event);
+templates2events("/usr/share/BackupPC/cygwin/rsyncd.secrets", $event);
+templates2events("/usr/share/BackupPC/cygwin/rsyncd.conf", $event);
+templates2events("/usr/share/BackupPC/cygwin/backuppc-fw-W7.bat", $event);
+templates2events("/usr/share/BackupPC/cygwin/backuppc-fw-xp.bat", $event);
 
 event_actions($event,
 'initialize-default-databases' => '00',
+'backuppc-genkey' => '01',
 'nethserver-BackupPC-conf' => '10',
-'nethserver-BackupPC-service-conf' => '20',
-'backuppc-upgrade-config_pl' => '40');
+'backuppc-upgrade-config_pl' => '20');
 
 event_services($event,
 'httpd' => 'reload',

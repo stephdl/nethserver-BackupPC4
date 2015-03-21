@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.0
-Release: 3%{?dist}
+Release: 5%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -33,6 +33,7 @@ perl createlinks
 
 %install
 %{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
+%{__mkdir} -p $RPM_BUILD_ROOT/etc/BackupPC/pc
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
@@ -69,6 +70,10 @@ fi
 exit 0
 
 %changelog
+* Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-5.ns6
+- Added template and cygwin settings
+- Added binary of rsync-cygwin
+
 * Sat Mar 14 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns6
 - First release to Nethserver
 - Thanks to Daniel berteaud the first author.
