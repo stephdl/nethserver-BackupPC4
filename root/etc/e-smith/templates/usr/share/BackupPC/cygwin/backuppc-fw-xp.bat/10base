@@ -1,0 +1,21 @@
+{
+use strict;
+use esmith::NetworksDB;
+
+     my $idb = esmith::NetworksDB->open_ro;
+     my @interfaces = $idb->get_by_role('green');
+     my $green = $interfaces[0];
+
+my $IP = $idb->get_prop("$green",'ipaddr') || '192.168.xxx.xxx';
+
+
+$OUT .=<< "HERE"
+rem backuppc-fw-xp.bat - Install firewall rules for rsycnd
+
+set REMOTE=$IP,LocalSubnet
+netsh firewall set allowedprogram program = c:\rsyncd\rsync.exe name = "RSync Program" = enable scope = CUSTOM addresses = %REMOTE%
+netsh firewall set portopening protocol = TCP port = 873 name = "RSync Related Port" = enable scope = CUSTOM addresses = %REMOTE%
+netsh firewall set icmpsetting 8 enable
+pause
+HERE
+}
