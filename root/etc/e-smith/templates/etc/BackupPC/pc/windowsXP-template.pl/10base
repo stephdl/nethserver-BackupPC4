@@ -5,7 +5,7 @@ open FILE, "$keyfile" or die "Couldn't open file: $!";
 my $secret = join("", <FILE>);
 close FILE;
 
-$OUT .=<< "HERE";
+$OUT .=<< "HERE"
 $Conf{ClientCharset} = 'cp1252';
 $Conf{RsyncShareName} = [
   'cDrive'

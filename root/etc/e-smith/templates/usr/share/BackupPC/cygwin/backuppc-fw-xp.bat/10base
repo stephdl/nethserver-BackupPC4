@@ -9,7 +9,7 @@ use esmith::NetworksDB;
 my $IP = $idb->get_prop("$green",'ipaddr') || '192.168.xxx.xxx';
 
 
-$OUT .=<< "HERE";
+$OUT .=<< "HERE"
 rem backuppc-fw-xp.bat - Install firewall rules for rsycnd
 
 set REMOTE=$IP,LocalSubnet
