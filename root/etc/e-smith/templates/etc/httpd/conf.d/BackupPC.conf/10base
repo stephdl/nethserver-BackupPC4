@@ -1,4 +1,8 @@
 {
+
+    return '' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
+        (${'httpd-bkpc'}{'status'} || 'disabled') eq 'enabled');
+
     $OUT = '';
     $OUT .= "    ProxyPass /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
     $OUT .= "    ProxyPassReverse /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
