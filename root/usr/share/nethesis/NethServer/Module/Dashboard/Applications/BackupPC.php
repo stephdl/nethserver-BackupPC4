@@ -18,8 +18,8 @@ class BackupPC extends \Nethgui\Module\AbstractModule implements \NethServer\Mod
     {
          $host = explode(':',$_SERVER['HTTP_HOST']);
          return array(
-            'url_BackupPC' => "https://".$host[0]."/BackupPC"
-            'url_cygwin-rsynd' => "https://".$host[0]."/cygwin"
+            'BackupPC' => "https://".$host[0]."/BackupPC",
+            'Cygwin' => "https://".$host[0]."/cygwin"
          );
     }
 }
