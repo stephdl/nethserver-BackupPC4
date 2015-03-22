@@ -13,6 +13,9 @@ $OUT .=<< "HERE";
 rem backuppc-fw-xp.bat - Install firewall rules for rsycnd
 
 set REMOTE=$IP,LocalSubnet
+HERE
+
+$OUT .=<< 'HERE';
 netsh firewall set allowedprogram program = c:\rsyncd\rsync.exe name = "RSync Program" = enable scope = CUSTOM addresses = %REMOTE%
 netsh firewall set portopening protocol = TCP port = 873 name = "RSync Related Port" = enable scope = CUSTOM addresses = %REMOTE%
 netsh firewall set icmpsetting 8 enable
