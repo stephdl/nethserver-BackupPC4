@@ -33,6 +33,7 @@ perl createlinks
 
 %install
 %{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
+%{__mkdir} -p $RPM_BUILD_ROOT/etc/BackupPC/pc
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
