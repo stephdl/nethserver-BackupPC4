@@ -1,6 +1,6 @@
 {
 
-    return '' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
+    return '# BackupPC and/or httpd-bkpc are disabled' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
         (${'httpd-bkpc'}{'status'} || 'disabled') eq 'enabled');
 
     $OUT = '';
@@ -44,7 +44,4 @@ my $pwd = NethServer::Password::store('libuser');
         Satisfy all
     </Directory>
 HERE
-
-
 }
-
