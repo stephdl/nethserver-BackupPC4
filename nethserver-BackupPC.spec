@@ -67,10 +67,10 @@ if [[ ! -e /var/lib/BackupPC/.ssh/id_rsa ]]; then
 /bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -C "RSA key for BackupPC automatic login" -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
 fi
 %postun
-if [ "$1" != 0 ]; then
-/sbin/service httpd-bkpc restart 2>&1 > /dev/null
-fi
-exit 0
+#if [ "$1" != 0 ]; then
+#/sbin/service httpd-bkpc restart 2>&1 > /dev/null
+#fi
+#exit 0
 
 %changelog
 * Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-7.ns6
