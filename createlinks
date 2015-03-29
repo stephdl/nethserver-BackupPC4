@@ -10,7 +10,7 @@ templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
 templates2events("/etc/BackupPC/pc/windowsxp-template.pl", $event);
 templates2events("/etc/BackupPC/pc/windows7-template.pl", $event);
 templates2events("/etc/BackupPC/pc/windows8-template.pl", $event);
-templates2events("/etc/BackupPC/pc/Linux-template.pl", $event);
+templates2events("/etc/BackupPC/pc/linux-template.pl", $event);
 templates2events("/usr/share/BackupPC/cygwin/rsyncd.secrets", $event);
 templates2events("/usr/share/BackupPC/cygwin/rsyncd.conf", $event);
 templates2events("/usr/share/BackupPC/cygwin/backuppc-fw-W7.bat", $event);
