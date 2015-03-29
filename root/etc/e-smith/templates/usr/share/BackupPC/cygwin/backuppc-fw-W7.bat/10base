@@ -6,7 +6,7 @@ my $LocalIP = $ndb->green()->prop('ipaddr') || '192.168.xxx.xxx';
 
 
 $OUT .=<< "HERE";
-rem backuppc-fw-vista.bat - Install firewall rules for rsycnd
+rem backuppc-fw-W7.bat - Install firewall rules for rsycnd
 
 set REMOTE=$LocalIP,LocalSubnet
 HERE
