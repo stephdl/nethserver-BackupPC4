@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -73,12 +73,13 @@ fi
 exit 0
 
 %changelog
-* Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-6.ns6
+* Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-7.ns6
 - Added template and cygwin settings
 - Added binary of rsync-cygwin
 - Automatic 4096 rsa key creation in /var/lib/BackupPC
-- Added a linux template
+- Added a linux backup template
 - corrected backuppc url error
+- Added a CgiMultiUser option (admin can be the only allowed)
 
 * Sat Mar 14 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns6
 - First release to Nethserver
