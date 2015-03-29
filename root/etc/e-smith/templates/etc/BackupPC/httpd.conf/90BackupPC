@@ -1,7 +1,7 @@
 {
-
 use NethServer::Password;
 my $pwd = NethServer::Password::store('libuser');
+my $cgimultiuser = ${backuppc}{CgiMultiUser} || 'enabled';
 
 $OUT .=<<"HERE";
 Alias           /BackupPC/images        /usr/share/BackupPC/html/
@@ -30,7 +30,16 @@ ScriptAlias     /backuppc               /usr/share/BackupPC/sbin/BackupPC_Admin
         AuthLDAPBindDN cn=libuser,dc=directory,dc=nh
         AuthLDAPBindPassword $pwd
         AuthLDAPURL "ldap://localhost/ou=People,dc=directory,dc=nh?uid?sub?(objectClass=posixAccount)"
-        require valid-user
+HERE
+
+if ($cgimultiuser eq 'enabled') {
+    $OUT .='        require valid-user'
+}
+
+else {
+    $OUT .='        require user admin'
+}
+$OUT .=<<"HERE";
         Satisfy all
 </Directory>
 HERE
