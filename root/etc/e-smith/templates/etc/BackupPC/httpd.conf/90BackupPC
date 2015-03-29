@@ -33,11 +33,11 @@ ScriptAlias     /backuppc               /usr/share/BackupPC/sbin/BackupPC_Admin
 HERE
 
 if ($cgimultiuser eq 'enabled') {
-    $OUT .='        require valid-user'
+    $OUT .='        require valid-user\n';
 }
 
 else {
-    $OUT .='        require user admin'
+    $OUT .='        require user admin\n';
 }
 $OUT .=<<"HERE";
         Satisfy all
