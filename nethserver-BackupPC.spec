@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.0
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -61,7 +61,7 @@ exit 0
 
 
 %post
-#/sbin/chkconfig --add httpd-bkpc
+/sbin/chkconfig --add httpd-bkpc
 # rsa key created
 if [[ ! -e /var/lib/BackupPC/.ssh/id_rsa ]]; then
 /bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -C "RSA key for BackupPC automatic login" -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
