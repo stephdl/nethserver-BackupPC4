@@ -41,6 +41,9 @@ if [ $EX == 'enabled' ]; then
 	if [ $(grep -c windowsxp-template /etc/BackupPC/hosts) -lt 1 ]; then
 		echo "windowsxp-template 0 admin" >> /etc/BackupPC/hosts
 	fi
+        if [ $(grep -c Linux-template /etc/BackupPC/hosts) -lt 1 ]; then
+                echo "Linux-template 0 admin" >> /etc/BackupPC/hosts
+        fi
 fi
 
 # Ensure permissions are ok
