@@ -62,6 +62,8 @@ exit 0
 
 %post
 /sbin/chkconfig --add httpd-bkpc
+# rsa key created
+/bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
 
 %postun
 if [ "$1" != 0 ]; then
@@ -73,6 +75,7 @@ exit 0
 * Sat Mar 28 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-5.ns6
 - Added template and cygwin settings
 - Added binary of rsync-cygwin
+- Automatic 4096 rsa key creation
 
 * Sat Mar 14 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns6
 - First release to Nethserver
