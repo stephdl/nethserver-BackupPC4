@@ -3,8 +3,7 @@
 use esmith::Build::CreateLinks  qw(:all);
 
 my $event = 'nethserver-BackupPC-update';
-templates2events("/etc/BackupPC/httpd.conf", $event);
-templates2events("/etc/httpd/conf/httpd.conf", $event);
+templates2events("/etc/httpd/conf.d/default-virtualhost.inc", $event);
 templates2events("/etc/sudoers", $event);
 templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
 templates2events("/etc/BackupPC/pc/windowsxp-template.pl", $event);
@@ -24,6 +23,5 @@ event_actions($event,
 
 event_services($event,
 'httpd' => 'reload',
-'backuppc'=>'restart',
-'httpd-bkpc'=>'restart');
+'backuppc'=>'restart');
 

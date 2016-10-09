@@ -1,22 +1,22 @@
-Name: nethserver-BackupPC
-Version: 1.0.1
-Release: 2%{?dist}
+%define name nethserver-BackupPC
+%define version 1.1.0
+%define release 1
+Name: %{name}
+Version: %{version}
+Release: %{release}%{?dist}
 Summary: BackupPC integration into Nethserver
-
 Group: Applications/System
 License: GPL
 URL: http://dev.nethserver.org/projects/nethforge/wiki/%{name} 
 Source: %{name}-%{version}.tar.gz
-
 BuildRoot: %{_tmppath}/%{name}-%{version}
 BuildArch: noarch
-
 BuildRequires: nethserver-devtools
 BuildRequires: perl
 Requires: BackupPC >= 3.1.0
 Requires: nethserver-httpd
-Requires: nethserver-directory
-
+Requires: bzip2
+Requires: mod_authnz_pam
 
 %description
 BackupPC is a high-performance, enterprise-grade system for backing up Linux
@@ -32,13 +32,11 @@ This package contains specific configuration for Nethserver
 perl createlinks
 
 %install
-%{__mkdir} -p $RPM_BUILD_ROOT/var/log/httpd-bkpc
 %{__mkdir} -p $RPM_BUILD_ROOT/etc/BackupPC/pc
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
-/sbin/e-smith/genfilelist $RPM_BUILD_ROOT \
-        --dir /var/log/httpd-bkpc 'attr(0750,backuppc,backuppc)' \
+%{genfilelist} $RPM_BUILD_ROOT \
 > %{name}-%{version}-filelist
 
 
@@ -47,21 +45,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
-
+%dir %{_nseventsdir}/%{name}-update
 %pre
 %{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
 
 %preun
-if [ "$1" = 0 ]; then
-# stop httpd-bkpc silently, but only if it's running
-/sbin/service httpd-bkpc stop &>/dev/null
-/sbin/chkconfig --del httpd-bkpc
-fi
-exit 0
 
 
 %post
-/sbin/chkconfig --add httpd-bkpc 2>&1 1>/dev/null
 # rsa key created
 if [[ ! -e /var/lib/BackupPC/.ssh/id_rsa ]]; then
 /bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -C "RSA key for BackupPC automatic login" -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
@@ -83,12 +74,11 @@ echo "
 
 
 %postun
-#if [ "$1" != 0 ]; then
-#/sbin/service httpd-bkpc restart 2>&1 > /dev/null
-#fi
-#exit 0
 
 %changelog
+* Fri Nov 25 2016 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.0-1.ns7
+- NS7 adaptation
+
 * Sun May 3 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1-2.ns6
 - disclamer
 

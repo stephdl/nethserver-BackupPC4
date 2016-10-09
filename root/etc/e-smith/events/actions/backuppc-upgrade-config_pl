@@ -10,8 +10,8 @@ if [ -e /etc/BackupPC/config.pl ]; then
 
 
 	# Update the admin user and the user whi receives the alerts
-	sed -i "s|$Conf{CgiAdminUsers}     = '';|$Conf{CgiAdminUsers}     = 'admin';|" /etc/BackupPC/config.pl
-	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'admin@$DomainName';|" /etc/BackupPC/config.pl
+	sed -i "s|$Conf{CgiAdminUsers}     = '';|$Conf{CgiAdminUsers}     = 'admin admin@$DomainName';|" /etc/BackupPC/config.pl
+	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'root@localhost';|" /etc/BackupPC/config.pl
 
 	# Update the CgiURL
 	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl

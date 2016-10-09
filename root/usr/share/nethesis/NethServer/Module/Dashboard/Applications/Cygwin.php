@@ -6,19 +6,19 @@ namespace NethServer\Module\Dashboard\Applications;
  *
  * @author stephane de labrusse
  */
-class BackupPC extends \Nethgui\Module\AbstractModule implements \NethServer\Module\Dashboard\Interfaces\ApplicationInterface
+class Cygwin extends \Nethgui\Module\AbstractModule implements \NethServer\Module\Dashboard\Interfaces\ApplicationInterface
 {
 
     public function getName()
     {
-        return "BackupPC";
+        return "Cygwin";
     }
 
     public function getInfo()
     {
          $host = explode(':',$_SERVER['HTTP_HOST']);
          return array(
-            'url' => "https://".$host[0]."/BackupPC",
+            'url' => "https://".$host[0]."/cygwin"
          );
     }
 }
