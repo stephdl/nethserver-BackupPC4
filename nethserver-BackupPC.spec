@@ -37,7 +37,7 @@ perl createlinks
 
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
-/sbin/e-smith/genfilelist $RPM_BUILD_ROOT \
+%{genfilelist} $RPM_BUILD_ROOT \
         --dir /var/log/httpd-bkpc 'attr(0750,backuppc,backuppc)' \
 > %{name}-%{version}-filelist
 
@@ -47,7 +47,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
-
+%dir %{_nseventsdir}/%{name}-update
 %pre
 %{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
 
