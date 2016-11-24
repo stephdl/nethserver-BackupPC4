@@ -23,15 +23,13 @@ LoadModule authn_file_module modules/mod_authn_file.so
 #LoadModule authn_alias_module modules/mod_authn_alias.so
 LoadModule authn_anon_module modules/mod_authn_anon.so
 LoadModule authn_dbm_module modules/mod_authn_dbm.so
-LoadModule authn_default_module modules/mod_authn_default.so
+#LoadModule authn_default_module modules/mod_authn_default.so
 LoadModule authz_host_module modules/mod_authz_host.so
 LoadModule authz_user_module modules/mod_authz_user.so
 LoadModule authz_owner_module modules/mod_authz_owner.so
 LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
 LoadModule authz_dbm_module modules/mod_authz_dbm.so
-LoadModule authz_default_module modules/mod_authz_default.so
-LoadModule ldap_module modules/mod_ldap.so
-LoadModule authnz_ldap_module modules/mod_authnz_ldap.so
+#LoadModule authz_default_module modules/mod_authz_default.so
 LoadModule include_module modules/mod_include.so
 LoadModule log_config_module modules/mod_log_config.so
 LoadModule logio_module modules/mod_logio.so
@@ -66,7 +64,7 @@ LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
 LoadModule proxy_connect_module modules/mod_proxy_connect.so
 LoadModule cache_module modules/mod_cache.so
 LoadModule suexec_module modules/mod_suexec.so
-LoadModule disk_cache_module modules/mod_disk_cache.so
+LoadModule cache_disk_module modules/mod_cache_disk.so
 LoadModule cgi_module modules/mod_cgi.so
 LoadModule version_module modules/mod_version.so
 HERE
@@ -106,7 +104,7 @@ AddIconByType (TXT,/icons/text.gif) text/*
 AddIconByType (IMG,/icons/image2.gif) image/*
 AddIconByType (SND,/icons/sound2.gif) audio/*
 AddIconByType (VID,/icons/movie.gif) video/*
-DefaultType text/plain
+DefaultType none
 TypesConfig /etc/mime.types
 
 AddEncoding x-compress Z
@@ -160,6 +158,7 @@ AddHandler imap-file map
 
 DocumentRoot         /usr/share/BackupPC/html
 
+Include conf.modules.d/*.conf
 HERE
 }
 
