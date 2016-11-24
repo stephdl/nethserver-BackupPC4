@@ -38,6 +38,7 @@ perl createlinks
 (cd root   ; /usr/bin/find . -depth -print | /bin/cpio -dump $RPM_BUILD_ROOT)
 /bin/rm -f %{name}-%{version}-filelist
 %{genfilelist} $RPM_BUILD_ROOT \
+        --file /etc/rc.d/init.d/httpd-bkpc 'attr(0750,root,root)' \
         --dir /var/log/httpd-bkpc 'attr(0750,backuppc,backuppc)' \
 > %{name}-%{version}-filelist
 
