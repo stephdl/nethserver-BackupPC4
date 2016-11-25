@@ -15,7 +15,7 @@ BuildRequires: nethserver-devtools
 BuildRequires: perl
 Requires: BackupPC >= 3.1.0
 Requires: nethserver-httpd
-Requires: nethserver-directory
+Requires: bzip2
 
 
 %description

@@ -3,47 +3,71 @@
     return '# BackupPC and/or httpd-bkpc are disabled' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
         (${'httpd-bkpc'}{'status'} || 'disabled') eq 'enabled');
 
-    $OUT = '';
-    $OUT .= "    ProxyPass /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
-    $OUT .= "    ProxyPassReverse /BackupPC http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
-
-    $OUT .= "    ProxyPass /backuppc http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
-    $OUT .= "    ProxyPassReverse /backuppc http://127.0.0.1:${'httpd-bkpc'}{TCPPort}/BackupPC\n";
-
     $OUT .=<<"HERE";
 
-    <Location /BackupPC>
-        AuthName "BackupPC"
+ Alias /BackupPC/images /usr/share/BackupPC/html/
+
+ ScriptAlias /BackupPC /usr/share/BackupPC/sbin/BackupPC_Admin
+ ScriptAlias /backuppc /usr/share/BackupPC/sbin/BackupPC_Admin
+
+
+    <IfModule !authnz_pam_module>
+        LoadModule authnz_pam_module modules/mod_authnz_pam.so
+    </IfModule>
+
+    <Location /backuppc>
+        AuthName "backuppc"
         AuthType Basic
         SSLRequireSSL on
-        order deny,allow
-        deny from all
-        allow from $localAccess
+        AuthBasicProvider PAM
+        AuthPAMService backuppc
+        Require valid-user
         Satisfy all
     </Location>
 
-HERE
+    <Location /BackupPC>
+        AuthName "backuppc"
+        AuthType Basic
+        SSLRequireSSL on
+        AuthBasicProvider PAM
+        AuthPAMService backuppc
+        Require valid-user
+        Satisfy all
+    </Location>
 
-use NethServer::Password;
-my $pwd = NethServer::Password::store('libuser');
+    <Directory /usr/share/BackupPC/>
+        AuthName "BackupPC"
+    <IfModule mod_authz_core.c>
+        Require ip $localAccess
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        AllowOverride All
+        Order allow,deny
+        Deny from all
+    </IfModule>
+    </Directory>
+
+HERE
 
     $OUT .=<<"HERE";
 
     Alias /cygwin /usr/share/BackupPC/cygwin
 
+    <Location /cygwin>
+        AuthName "cygwin-rsyncd setup"
+        AuthType Basic
+        SSLRequireSSL on
+        AuthBasicProvider PAM
+        AuthPAMService backuppc
+        Require user admin admin\@{$DomainName}
+        Satisfy all
+    </Location>
+
     <Directory /usr/share/BackupPC/cygwin>
         Options -Indexes
         AllowOverride None
-        Order Deny,Allow
-        Deny from All
-        allow from $localAccess
+        Require ip $localAccess
         AuthName "cygwin-rsyncd setup"
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthLDAPBindDN cn=libuser,dc=directory,dc=nh
-        AuthLDAPBindPassword $pwd
-        AuthLDAPURL "ldap://localhost/ou=People,dc=directory,dc=nh?uid?sub?(objectClass=posixAccount)"
-        require user admin
         Satisfy all
     </Directory>
 HERE
