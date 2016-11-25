@@ -16,7 +16,7 @@ BuildRequires: perl
 Requires: BackupPC >= 3.1.0
 Requires: nethserver-httpd
 Requires: bzip2
-
+Requires: mod_authnz_pam
 
 %description
 BackupPC is a high-performance, enterprise-grade system for backing up Linux
