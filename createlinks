@@ -23,5 +23,5 @@ event_actions($event,
 
 event_services($event,
 'httpd' => 'reload',
-'backuppc'=>'restart',
+'backuppc'=>'restart');
 
