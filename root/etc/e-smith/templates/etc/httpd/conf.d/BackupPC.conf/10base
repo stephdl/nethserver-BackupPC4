@@ -1,7 +1,6 @@
 {
 
-    return '# BackupPC and/or httpd-bkpc are disabled' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled' &&
-        (${'httpd-bkpc'}{'status'} || 'disabled') eq 'enabled');
+    return '# BackupPC is disabled' unless  ((${'backuppc'}{'status'} || 'disabled') eq 'enabled');
 
     $OUT .=<<"HERE";
 
@@ -59,7 +58,7 @@ HERE
         SSLRequireSSL on
         AuthBasicProvider PAM
         AuthPAMService backuppc
-        Require user admin admin\@{$DomainName}
+        Require user admin admin\@$DomainName
         Satisfy all
     </Location>
 
