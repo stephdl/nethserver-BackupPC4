@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
 Version: 1.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -47,6 +47,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
+%doc COPYING
 
 %pre
 %{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
@@ -66,21 +67,6 @@ exit 0
 if [[ ! -e /var/lib/BackupPC/.ssh/id_rsa ]]; then
 /bin/cat /dev/zero |/bin/su -s /bin/bash backuppc -c '/usr/bin/ssh-keygen -t rsa -b 4096 -C "RSA key for BackupPC automatic login" -f /var/lib/BackupPC/.ssh/id_rsa -q -N ""' 2>&1 1>/dev/null
 fi
-echo "
- Hi
-
- All my development work is done in my free time and from my own expenses. 
- If you consider my work as something helpful, thank you to kindly make 
- a donation to my paypal account and allow me to continue paying my server 
- and all associated costs.
-
- https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZPK8FKHVT4TY8
-
- Thank in advance.
- 
- Stephane de Labrusse Alias Stephdl
-"
-
 
 %postun
 #if [ "$1" != 0 ]; then
@@ -89,6 +75,9 @@ echo "
 #exit 0
 
 %changelog
+* Sun Mar 11 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1-3.ns6
+- GPL license
+
 * Sun May 3 2015 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1-2.ns6
 - disclamer
 
