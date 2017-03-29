@@ -27,3 +27,5 @@ event_services($event,
 'backuppc'=>'restart',
 'httpd-bkpc'=>'restart');
 
+my $event = 'trusted-networks-modify';
+templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);

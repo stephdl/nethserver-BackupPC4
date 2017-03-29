@@ -1,6 +1,6 @@
 Name: nethserver-BackupPC
-Version: 1.0.1
-Release: 3%{?dist}
+Version: 1.0.2
+Release: 1%{?dist}
 Summary: BackupPC integration into Nethserver
 
 Group: Applications/System
@@ -75,6 +75,9 @@ fi
 #exit 0
 
 %changelog
+* Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.2-1.ns7
+- Template expansion on trusted-network
+
 * Sun Mar 11 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1-3.ns6
 - GPL license
 
