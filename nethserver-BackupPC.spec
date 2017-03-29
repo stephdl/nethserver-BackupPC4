@@ -1,6 +1,6 @@
 %define name nethserver-BackupPC
-%define version 1.1.0
-%define release 2
+%define version 1.1.1
+%define release 1
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -63,6 +63,9 @@ fi
 %postun
 
 %changelog
+* Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.1-1.ns7
+- Template expansion on trusted-network
+
 * Sun Mar 11 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.0-2.ns7
 - GPL license
 
