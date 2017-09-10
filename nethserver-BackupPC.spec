@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC
-%define version 1.1.1
+%define version 1.1.2
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -63,6 +63,9 @@ fi
 %postun
 
 %changelog
+* Sun Sep 10 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.2-1.ns7
+- Restart httpd service on trusted-network
+
 * Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.1-1.ns7
 - Template expansion on trusted-network
 
