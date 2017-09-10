@@ -1,5 +1,5 @@
 Name: nethserver-BackupPC
-Version: 1.0.2
+Version: 1.0.3
 Release: 1%{?dist}
 Summary: BackupPC integration into Nethserver
 
@@ -75,6 +75,9 @@ fi
 #exit 0
 
 %changelog
+* Sun Sep 10 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.3-1.ns6
+- Restart httpd service on trusted-network
+
 * Wed Mar 29 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.2-1.ns7
 - Template expansion on trusted-network
 

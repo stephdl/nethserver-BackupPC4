@@ -29,3 +29,4 @@ event_services($event,
 
 my $event = 'trusted-networks-modify';
 templates2events("/etc/httpd/conf.d/BackupPC.conf", $event);
+event_services($event, 'httpd' => 'reload');
