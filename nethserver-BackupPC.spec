@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC
-%define version 1.1.2
+%define version 1.1.3
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -63,6 +63,9 @@ fi
 %postun
 
 %changelog
+* Sun Nov 21 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.3-1.ns7
+- set the good way to ping binary
+
 * Sun Sep 10 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.2-1.ns7
 - Restart httpd service on trusted-network
 

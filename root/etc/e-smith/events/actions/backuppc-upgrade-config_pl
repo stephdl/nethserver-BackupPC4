@@ -20,6 +20,10 @@ if [ -e /etc/BackupPC/config.pl ]; then
         sed -i "s|$Conf{SendmailPath} = undef;|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
         sed -i "s|$Conf{SendmailPath} = '';|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
 
+        #Update Ping
+        sed -i "s|$Conf{PingPath} = undef;|$Conf{PingPath}     = '/usr/bin/ping';|" /etc/BackupPC/config.pl
+        sed -i "s|$Conf{PingPath} = '';|$Conf{PingPath}     = '/usr/bin/ping';|" /etc/BackupPC/config.pl
+
     #Update domain detstination
     sed -i "s|$Conf{EMailUserDestDomain} = '';|$Conf{EMailUserDestDomain}     = '$DomainName';|" /etc/BackupPC/config.pl
 
