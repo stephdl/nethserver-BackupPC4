@@ -15,7 +15,7 @@ if [ -e /etc/BackupPC/config.pl ]; then
 
 	# Update the CgiURL
 	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
-	
+
 	#Update sendmail
         sed -i "s|$Conf{SendmailPath} = undef;|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
         sed -i "s|$Conf{SendmailPath} = '';|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
@@ -37,16 +37,16 @@ fi
 EX=$(/sbin/e-smith/db configuration getprop backuppc examples)
 if [ $EX == 'enabled' ]; then
 	if [ $(grep -c windows7-template /etc/BackupPC/hosts) -lt 1 ]; then
-		echo "windows7-template 0 admin" >> /etc/BackupPC/hosts
+		echo "windows7-template 0 admin@$DomainName" >> /etc/BackupPC/hosts
 	fi
         if [ $(grep -c windows8-template /etc/BackupPC/hosts) -lt 1 ]; then
-                echo "windows8-template 0 admin" >> /etc/BackupPC/hosts
+                echo "windows8-template 0 admin@$DomainName" >> /etc/BackupPC/hosts
         fi
 	if [ $(grep -c windowsxp-template /etc/BackupPC/hosts) -lt 1 ]; then
-		echo "windowsxp-template 0 admin" >> /etc/BackupPC/hosts
+		echo "windowsxp-template 0 admin@$DomainName" >> /etc/BackupPC/hosts
 	fi
         if [ $(grep -c linux-template /etc/BackupPC/hosts) -lt 1 ]; then
-                echo "linux-template 0 admin" >> /etc/BackupPC/hosts
+                echo "linux-template 0 admin@$DomainName" >> /etc/BackupPC/hosts
         fi
 fi
 
@@ -54,4 +54,3 @@ fi
 chown -R backuppc:backuppc /etc/BackupPC/
 chown -R backuppc:backuppc /var/log/BackupPC/
 find /etc/BackupPC/ -type f -exec chmod 640 {} \;
-

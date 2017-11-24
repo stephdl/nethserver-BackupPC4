@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC
-%define version 1.1.3
+%define version 1.1.4
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -63,6 +63,9 @@ fi
 %postun
 
 %changelog
+* Fri Nov 24 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.4-1.ns7
+- Set the admin user of the system template to admin@domaiName
+
 * Sun Nov 21 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.3-1.ns7
 - set the good way to ping binary
 
