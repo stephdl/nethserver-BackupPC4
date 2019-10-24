@@ -17,9 +17,11 @@ Requires: BackupPC >= 4.3.1
 Requires: nethserver-httpd
 Requires: bzip2
 Requires: mod_authnz_pam
+Conflicts: BackupPC < 4.3.1
+Conflicts: nethserver-BackupPC
 
 %description
-BackupPC is a high-performance, enterprise-grade system for backing up Linux
+BackupPC v4 is a high-performance, enterprise-grade system for backing up Linux
 and WinXX PCs and laptops to a server's disk. BackupPC is highly configurable
 and easy to install and maintain.
 This package contains specific configuration for Nethserver
