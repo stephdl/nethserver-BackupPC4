@@ -14,7 +14,7 @@ if [ -e /etc/BackupPC/config.pl ]; then
 	sed -i "s|$Conf{EMailAdminUserName} = 'backuppc';|$Conf{EMailAdminUserName} = 'root@localhost';|" /etc/BackupPC/config.pl
 
 	# Update the CgiURL
-	sed -i "s|$Conf{CgiURL} = 'http://localhost/.*|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
+  sed -i "s|$Conf{CgiURL} = 'http://localhost/BackupPC';|$Conf{CgiURL} = 'https://$SystemName.$DomainName/BackupPC';|" /etc/BackupPC/config.pl
 
 	#Update sendmail
         sed -i "s|$Conf{SendmailPath} = undef;|$Conf{SendmailPath}     = '/usr/sbin/sendmail';|" /etc/BackupPC/config.pl
