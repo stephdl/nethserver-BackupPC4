@@ -1,10 +1,10 @@
-%define name nethserver-BackupPC
-%define version 1.1.4
+%define name nethserver-BackupPC4
+%define version 1.1.5
 %define release 1
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
-Summary: BackupPC integration into Nethserver
+Summary: BackupPC4 integration into Nethserver
 Group: Applications/System
 License: GPL
 URL: http://dev.nethserver.org/projects/nethforge/wiki/%{name} 
@@ -13,7 +13,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}
 BuildArch: noarch
 BuildRequires: nethserver-devtools
 BuildRequires: perl
-Requires: BackupPC >= 3.1.0
+Requires: BackupPC >= 4.3.1
 Requires: nethserver-httpd
 Requires: bzip2
 Requires: mod_authnz_pam
@@ -63,6 +63,9 @@ fi
 %postun
 
 %changelog
+* Thu Oct 24 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.5-1.ns7
+- First integration of BackupPC 4
+
 * Fri Nov 24 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.4-1.ns7
 - Set the admin user of the system template to admin@domaiName
 
