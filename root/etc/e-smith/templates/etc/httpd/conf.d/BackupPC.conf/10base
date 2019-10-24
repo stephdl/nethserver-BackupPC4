@@ -6,8 +6,8 @@
 
  Alias /BackupPC/images /usr/share/BackupPC/html/
 
- ScriptAlias /BackupPC /usr/share/BackupPC/sbin/BackupPC_Admin
- ScriptAlias /backuppc /usr/share/BackupPC/sbin/BackupPC_Admin
+ ScriptAlias /BackupPC /usr/libexec/BackupPC/BackupPC_Admin
+ ScriptAlias /backuppc /usr/libexec/BackupPC/BackupPC_Admin
 
 
     <IfModule !authnz_pam_module>
