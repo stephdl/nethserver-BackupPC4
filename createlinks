@@ -19,7 +19,8 @@ event_actions($event,
 'initialize-default-databases' => '00',
 'backuppc-genkey' => '01',
 'nethserver-BackupPC-conf' => '10',
-'backuppc-upgrade-config_pl' => '20');
+'backuppc-upgrade-config_pl' => '20',
+'BackupPC4_enablerepo' => '95');
 
 event_services($event,
 'httpd' => 'reload',

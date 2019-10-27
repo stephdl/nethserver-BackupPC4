@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC4
-%define version 1.1.5
+%define version 1.1.6
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -65,6 +65,9 @@ fi
 %postun
 
 %changelog
+* Sun Oct 27 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.6-1.ns7
+- Enable the BackupPC4 repository 
+
 * Thu Oct 24 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.5-1.ns7
 - First integration of BackupPC 4
 
