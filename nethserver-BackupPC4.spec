@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC4
-%define version 1.1.6
+%define version 1.1.7
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -65,6 +65,11 @@ fi
 %postun
 
 %changelog
+* Fri Nov 01 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.7-1.ns7
+- Removed Runtime directory
+- Restart the service always
+- Renamed spec file to BackuPC4 
+
 * Sun Oct 27 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 1.1.6-1.ns7
 - Enable the BackupPC4 repository 
 
@@ -177,4 +182,3 @@ fi
 - [3.0-0]
 - rpm package
 - script BackupPC_SME_remoteBackup to remotly backup the pool (to another UNIX host)
-
