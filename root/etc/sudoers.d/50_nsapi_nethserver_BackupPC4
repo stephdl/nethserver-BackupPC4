@@ -1,0 +1,8 @@
+
+#
+# nsapi_nethserver_BackupPC4
+#
+Cmnd_Alias NSAPI_NETHSERVER_BACKUPPC4 = \
+     /usr/libexec/nethserver/api/nethserver-BackupPC4/read
+
+Defaults!NSAPI_NETHSERVER_BACKUPPC4 !requiretty
