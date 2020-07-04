@@ -1,5 +1,5 @@
 %define name nethserver-BackupPC4
-%define version 1.2.1
+%define version 1.2.2
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -65,7 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/usermod -m -d /var/lib/BackupPC backuppc >& /dev/null || :
 
 %preun
-
+/usr/bin/rm -f /etc/httpd/conf.d/BackupPC.conf
+/usr/bin/systemctl reload httpd
 
 %post
 # rsa key created
@@ -76,6 +77,9 @@ fi
 %postun
 
 %changelog
+* Sat Jul 04 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.2.2-1
+- Remove http templates after rpm removal
+
 * Thu Mar 05 2020  stephane de Labrusse <stephdl@de-labrusse.fr> 1.2.1-1.ns7
 - Fix bad sudoers permission
 
