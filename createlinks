@@ -17,6 +17,7 @@ foreach my $event (qw ( nethserver-BackupPC4-update
     templates2events("/usr/share/BackupPC/cygwin/rsyncd.conf", $event);
     templates2events("/usr/share/BackupPC/cygwin/backuppc-fw-W7.bat", $event);
     templates2events("/usr/share/BackupPC/cygwin/backuppc-fw-xp.bat", $event);
+    templates2events("/etc/nethserver/eorepo.conf", $event);
 
     event_actions($event,
     'initialize-default-databases' => '00',
