@@ -1,6 +1,6 @@
 %define name nethserver-BackupPC4
 %define version 1.2.3
-%define release 1
+%define release 2
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -79,7 +79,7 @@ if [ $1 == 0 ] ; then
 fi
 
 %changelog
-* Thu Aug 05 2021 stephane de Labrusse <stephdl@de-labrusse.fr> - 1.2.3-1
+* Thu Aug 05 2021 stephane de Labrusse <stephdl@de-labrusse.fr> - 1.2.3-2
 - Do not use the software-repo-save event
 
 * Sat Jul 04 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.2.2-1

@@ -23,8 +23,7 @@ foreach my $event (qw ( nethserver-BackupPC4-update
     'initialize-default-databases' => '00',
     'backuppc-genkey' => '01',
     'nethserver-BackupPC-conf' => '10',
-    'backuppc-upgrade-config_pl' => '20',
-    'BackupPC4_enablerepo' => '95');
+    'backuppc-upgrade-config_pl' => '20');
 
     event_services($event,
     'httpd' => 'reload',
